@@ -37,13 +37,13 @@
     * e.g. groupByKey
 
 * Building DAG
-  * after you create a DAG and run an action, Spark looks for optimization opportunities
-  * it looks for:
-    1. Shuffle boundaries - these are dependency points where work cannot be run in parallel (see visual example)
-  * then it runs data through DAG
-    * when a stage is submitted, tasks are assigned
-    * assigns one task per partition
-    * think of the tasks as a single thread - they can be run in parallel
+  * When running a DAG, Spark looks for optimization opportunities by identifying shuffle boundaries
+    * dependency points where work cannot be run in parallel (see visual example)
+    * these points are used to create Stages
+  * Then data is run through DAG
+    * when a stage is submitted, tasks are assigned to each partition
+    * assigns one task per partition??
+    * think of tasks as a single thread - they can be run in parallel
     
 * Jobs, Stages, and Tasks
   * Jobs are triggered by Actions
@@ -64,6 +64,7 @@
   * each machine is JVM (java virtual machine?)
   * one master - doesn't do any computation, doles out work to workers
   * three Worker JVMs report results back to Master and assign jobs
+  * IMPORTANT: Workers can have multiple partitions
   * Executor JVM is below the worker JVM and actually run the jobs
   * NOTE: worker cores is the  number of tasks or threads that can be run at any time
     * Spark default is the same number of cores as machines on each Executor, but it makes more sense to use more (?)
